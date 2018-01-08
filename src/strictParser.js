@@ -1,10 +1,10 @@
 const Parser=require("./keyValueParser.js");
 const strictParseInfoCreator=require("./parseInfoCreator.js").strict;
 
-var StrictParser=function(listOfKeys) {
+var StrictParser=function(listOfKeys,option=true) {
   Parser.call(this);
   let sanitisedListOfKeys=listOfKeys||[];
-  this.parseInfoCreator=strictParseInfoCreator(sanitisedListOfKeys);
+  this.parseInfoCreator=strictParseInfoCreator(sanitisedListOfKeys,option);
 }
 
 StrictParser.prototype=Object.create(Parser.prototype);
