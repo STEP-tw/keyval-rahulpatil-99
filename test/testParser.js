@@ -1,7 +1,6 @@
 const src=function(filePath){return "../src/"+filePath};
 const errors=function(filePath){return "../src/errors/"+filePath};
 
-const assert=require('assert');
 const chaiAssert=require('chai').assert;
 const Parser=require(src('index.js')).Parser;
 const MissingValueError=require(errors('missingValueError.js'));
@@ -211,56 +210,69 @@ describe("error handling",function(){
   });
 
   it("throws error on missing value when value is unquoted",function(){
-    assert.throws(
-      () => {
-        kvParser.parse("key=")
-      },
-      errorChecker("key",3,MissingValueError))
+    chaiAssert.throws(
+      () =>{
+        try {
+          kvParser.parse("key=")
+        } catch (e) {
+          if(errorChecker("key",3,MissingValueError) && e) throw e;
+        }
+    });
   });
 
   it("throws error on missing value when value is quoted",function(){
-    assert.throws(
+    chaiAssert.throws(
       () => {
-        kvParser.parse("key=\"value")
-      },
-      errorChecker("key",9,MissingEndQuoteError)
-    )
+        try {
+          kvParser.parse("key=\"value")
+        } catch (e) {
+          if(errorChecker("key",9,MissingEndQuoteError) && e) throw e;
+        }
+      })
   });
 
   it("throws error on missing key",function(){
-    assert.throws(
+    chaiAssert.throws(
       () => {
-        var p=kvParser.parse("=value");
-      },
-      errorChecker(undefined,0,MissingKeyError)
-    )
+        try{
+          var p=kvParser.parse("=value");
+        }catch(e){
+          if(errorChecker(undefined,0,MissingKeyError) && e) throw e;
+        }
+      })
   });
 
   it("throws error on invalid key",function(){
-    assert.throws(
+    chaiAssert.throws(
       () => {
-        var p=kvParser.parse("'foo'=value");
-      },
-      errorChecker(undefined,0,MissingKeyError)
-    )
+        try {
+          var p=kvParser.parse("'foo'=value");
+        } catch (e) {
+          if(errorChecker(undefined,0,MissingKeyError) && e) throw e;
+        }
+      })
   });
 
   it("throws error on missing assignment operator",function(){
-    assert.throws(
+    chaiAssert.throws(
       () => {
-        var p=kvParser.parse("key value");
-      },
-      errorChecker(undefined,4,MissingAssignmentOperatorError)
-    )
+        try {
+          var p=kvParser.parse("key value");
+        } catch (e) {
+          if(errorChecker(undefined,4,MissingAssignmentOperatorError) && e)
+          throw e;
+        }
+      })
   });
 
   it("throws error on incomplete key value pair",function(){
-    assert.throws(
+    chaiAssert.throws(
       () => {
-        var p=kvParser.parse("key");
-      },
-      errorChecker(undefined,2,IncompleteKeyValuePairError)
-    )
+        try {
+          var p=kvParser.parse("key");
+        } catch (e) {
+          if(errorChecker(undefined,2,IncompleteKeyValuePairError) && e)throw e;
+        }
+      })
   });
-
 });
