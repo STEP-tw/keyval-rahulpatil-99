@@ -1,8 +1,10 @@
 const src=function(filePath){return "../src/"+filePath};
+const errors=function(filePath){return "../src/errors/"+filePath};
 
 const assert=require('chai').assert;
 const Parsed=require(src('parsed.js'));
 const StrictParser=require(src('index.js')).StrictParser;
+const InvalidKeyError=require(errors('invalidKeyError.js'));
 
 describe("strict parser that is case insensitive extra",function(){
   it("should parse when specified keys are in upper case and actual is not",function(){
@@ -66,12 +68,12 @@ describe("strict parser that is case insensitive extra",function(){
   });
 });
 
-describe.skip("strict parser that is case sensitive",function(){
+describe("strict parser that is case sensitive",function(){
   it("should throw error when specified keys are in lower case and actual is not",function(){
     let kvParser=new StrictParser(["name"],true);
     // true indicates that parser is case sensitive
     assert.throws(()=>{
-      kvParser.parse("NAME=jayanth");
+        kvParser.parse("NAME=jayanth");
     })
   });
 });

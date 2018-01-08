@@ -5,9 +5,9 @@ const basic=function(initialParsingFunction) {
   return new ParseInfo(initialParsingFunction);
 }
 
-const strict=function(listOfKeys,option) {
+const strict=function(listOfKeys,caseSenitiveMode) {
   return function(initialParsingFunction) {
-    return new StrictParseInfo(initialParsingFunction,listOfKeys,option);
+    return new StrictParseInfo(initialParsingFunction,listOfKeys,caseSenitiveMode);
   }
 }
 module.exports = {

@@ -45,9 +45,6 @@ describe("strict parser that is case insensitive",function(){
 
   it("should not parse when specified keys are in lowercase and actual keys are not and case-sensitive mode is on",function(){
     let kvParser=new StrictParser(["name","age"]);
-    let expected=new Parsed();
-    expected["naME"]="john";
-    expected["Age"]="23";
     assert.throws(()=>{
       try{
         let parsed=kvParser.parse("naME=john Age=23");
